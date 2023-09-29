@@ -1,5 +1,4 @@
-package upb.Taller33;
-import java.util.Arrays;
+package upb.Taller33.TALLER3;
 import java.util.*;
 
 public class Libro implements Comparable<Libro> {
@@ -44,7 +43,18 @@ public class Libro implements Comparable<Libro> {
         return 0;
     }
     
-   
+public class FechaComparator  implements Comparator<Libro>{
+    
+    @Override
+    public int compare(Libro x, Libro y){
+        if(x.compareTo(y)>0) return 1;
+        if(x.compareTo(y)<0) return -1;
+        return 0;
+    }
+        // Pruebas unitarias del Comparator de Fecha
+    public static void main(String[] args){}
+    
+    }
 
     @Override
     public String toString() {

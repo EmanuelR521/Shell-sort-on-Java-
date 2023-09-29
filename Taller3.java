@@ -1,8 +1,8 @@
-package upb.Taller33;
+package upb.Taller33.TALLER3;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Comparator;
 
 import edu.princeton.cs.algs4.StdOut;
 
@@ -12,17 +12,12 @@ public class Taller3 {
         String ruta = "C:\\Books.csv";
         
         Libro[] libros = leerCSV(ruta);
-        listaPorRating(libros);
         for (Libro libro : libros) {
             StdOut.println(libro.toString());
         }
 
     }
 
-    public static Libro[] listaPorRating(Libro[] x){
-        Arrays.sort(x,(a,b) -> a.compareTo(b));
-        return x;
-    }
 
      public static Libro[] leerCSV(String ruta) throws IOException {
         Libro[] libros = new Libro[11127];
@@ -44,6 +39,7 @@ public class Taller3 {
         br.close();
         return libros;
     }
+
 
 
     
