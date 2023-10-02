@@ -9,7 +9,7 @@ public class Libro implements Comparable<Libro> {
 
     private String bookId;
     private String title;
-    private String Authors;
+    private String authors;
     public Float averageRating;
     private String isbn;
     private String isbn13;
@@ -20,13 +20,13 @@ public class Libro implements Comparable<Libro> {
     private String publicationDate;
     private String publisher;
 
-    public Libro(String bookId, String title, String Authors, Float averageRating, String isbn, String isbn13,
+    public Libro(String bookId, String title, String authors, Float averageRating, String isbn, String isbn13,
             String languageCode, int numPages, int ratingsCount, int textReviewsCount,
             String publicationDate, String publisher) {
 
         this.bookId = bookId;
         this.title = title;
-        this.Authors = Authors;
+        this.authors = authors;
         this.averageRating = averageRating;
         this.isbn = isbn;
         this.isbn13 = isbn13;
@@ -45,7 +45,15 @@ public class Libro implements Comparable<Libro> {
         return 0;
     }
 
-    public static class LibroComparator implements Comparator<Libro> {
+    public int compareTo(Libro bookInstance) {
+        if (authors > bookInstance.authors) return 1;
+        if (averageRating < bookInstance.averageRating) return -1;
+        return 0;
+    }
+
+
+
+    public static class authorComparator implements  {
 
         @Override
         public int compare(Libro x, Libro y) {
@@ -56,6 +64,10 @@ public class Libro implements Comparable<Libro> {
             return 0;
         }
 
+    }
+
+    public class averageRatingComparator implements Comparator<Libro>{
+        public int compare(Libro x, Libro y);
     }
 
     @Override
