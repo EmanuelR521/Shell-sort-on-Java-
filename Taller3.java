@@ -2,9 +2,6 @@ package upb.Taller33.TALLER3;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-
 import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
 public class Taller3 {
@@ -14,13 +11,16 @@ public class Taller3 {
         
         Libro[] libros = leerCSV(ruta);
 
-        Libro.LibroComparator myComparator = new Libro.LibroComparator();
+        Libro.averageRatingComparator myComparator = new Libro.averageRatingComparator();
 
-        Selection.sort(libros, myComparator.reversed());
+       // Selection.sort(libros, myComparator.reversed());
 
-        for (Libro libro : libros) {
+        /*for (Libro libro : libros) {
             StdOut.println(libro.toString());
-        }
+        }*/
+
+        Libro.publicationDateComparator myDateComparator = new Libro.publicationDateComparator();
+        Libro.listarPorComparador(libros,myDateComparator);
     }
 
 

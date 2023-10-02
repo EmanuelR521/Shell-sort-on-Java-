@@ -2,15 +2,16 @@ package upb.Taller33.TALLER3;
 
 import java.util.*;
 
-import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.Insertion;
+import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Libro implements Comparable<Libro> {
+public class Libro {
 
     private String bookId;
     private String title;
     private String authors;
-    public Float averageRating;
+    private Float averageRating;
     private String isbn;
     private String isbn13;
     private String languageCode;
@@ -39,40 +40,99 @@ public class Libro implements Comparable<Libro> {
 
     }
 
-    public int compareTo(Libro bookInstance) {
-        if (averageRating > bookInstance.averageRating) return 1;
-        if (averageRating < bookInstance.averageRating) return -1;
+    public int compareToAverageRating(Libro bookInstance) {
+        if (averageRating > bookInstance.averageRating)
+            return 1;
+        if (averageRating < bookInstance.averageRating)
+            return -1;
         return 0;
     }
 
-    public int compareTo(Libro bookInstance) {
-        if (authors > bookInstance.authors) return 1;
-        if (averageRating < bookInstance.averageRating) return -1;
+    public int compareToAuthors(Libro bookInstance) {
+        return authors.compareTo(bookInstance.authors);
+    }
+
+    public int compareToRatingsCount(Libro bookInstance) {
+        if (ratingsCount > bookInstance.ratingsCount)
+            return 1;
+        if (ratingsCount < bookInstance.ratingsCount)
+            return -1;
         return 0;
     }
 
+    public int compareToPublicationDate(Libro bookInstance) {
+        String[] date1 = publicationDate.split("/");
+        String[] date2 = publicationDate.split("/");
 
+        if (Integer.parseInt(date1[2]) != Integer.parseInt(date2[2])) return Integer.parseInt(date1[2]) - Integer.parseInt(date2[2]);
 
-    public static class authorComparator implements  {
+        if (Integer.parseInt(date1[1]) != Integer.parseInt(date2[1]))
+        
+            return Integer.parseInt(date1[1]) - Integer.parseInt(date2[1]);
+
+        return Integer.parseInt(date1[0]) - Integer.parseInt(date2[0]);
+    }
+
+    public static class publicationDateComparator implements Comparator<Libro> {
 
         @Override
         public int compare(Libro x, Libro y) {
-            if (x.compareTo(y) > 0)
+            if (x.compareToPublicationDate(y) > 0)
                 return 1;
-            if (x.compareTo(y) < 0)
+            if (x.compareToPublicationDate(y) < 0)
+                return -1;
+            return 0;
+        }
+    }
+
+    public static class AuthorsComparator implements Comparator<Libro> {
+
+        @Override
+        public int compare(Libro x, Libro y) {
+            if (x.compareToAuthors(y) > 0)
+                return 1;
+            if (x.compareToAuthors(y) < 0)
+                return -1;
+            return 0;
+        }
+    }
+
+    public static class RatingsCountComparator implements Comparator<Libro> {
+
+        @Override
+        public int compare(Libro x, Libro y) {
+            if (x.compareToRatingsCount(y) > 0)
+                return 1;
+            if (x.compareToRatingsCount(y) < 0)
+                return -1;
+            return 0;
+        }
+    }
+
+    public static class averageRatingComparator implements Comparator<Libro> {
+
+        @Override
+        public int compare(Libro x, Libro y) {
+            if (x.compareToAverageRating(y) > 0)
+                return 1;
+            if (x.compareToAverageRating(y) < 0)
                 return -1;
             return 0;
         }
 
     }
 
-    public class averageRatingComparator implements Comparator<Libro>{
-        public int compare(Libro x, Libro y);
+    public static void listarPorComparador(Libro [] x, Comparator<Libro> comparador){
+        Insertion.sort(x,comparador);
+        for (Libro libro : x) {
+            StdOut.println(libro.toString());
+        }
     }
 
     @Override
     public String toString() {
-        String returnText = "BOOK ID: " + bookId + "\n" + "TITLE: " + title + "\n" + "AUTHORS: " + Authors + "\n"
+
+        String returnText = "BOOK ID: " + bookId + "\n" + "TITLE: " + title + "\n" + "AUTHORS: " + authors + "\n"
                 + "AVERAGE RATING: " + averageRating + "\n" +
                 "ISBN: " + isbn + "\n" + "ISBN13: " + isbn13 + "\n" + "LANGUAGE CODE: " + languageCode + "\n"
                 + "PAGES: " + numPages + "\n" +
@@ -81,6 +141,5 @@ public class Libro implements Comparable<Libro> {
         ;
         return returnText;
     }
-
 
 }
