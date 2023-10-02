@@ -1,5 +1,9 @@
 package upb.Taller33.TALLER3;
+
 import java.util.*;
+
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Libro implements Comparable<Libro> {
 
@@ -15,9 +19,7 @@ public class Libro implements Comparable<Libro> {
     private int textReviewsCount;
     private String publicationDate;
     private String publisher;
-    public Libro(){
 
-    }
     public Libro(String bookId, String title, String Authors, Float averageRating, String isbn, String isbn13,
             String languageCode, int numPages, int ratingsCount, int textReviewsCount,
             String publicationDate, String publisher) {
@@ -37,23 +39,23 @@ public class Libro implements Comparable<Libro> {
 
     }
 
-
     public int compareTo(Libro bookInstance) {
-        if (averageRating != bookInstance.averageRating) return (int)(averageRating-bookInstance.averageRating);
+        if (averageRating > bookInstance.averageRating) return 1;
+        if (averageRating < bookInstance.averageRating) return -1;
         return 0;
     }
-    
-public class FechaComparator  implements Comparator<Libro>{
-    
-    @Override
-    public int compare(Libro x, Libro y){
-        if(x.compareTo(y)>0) return 1;
-        if(x.compareTo(y)<0) return -1;
-        return 0;
-    }
-        // Pruebas unitarias del Comparator de Fecha
-    public static void main(String[] args){}
-    
+
+    public static class LibroComparator implements Comparator<Libro> {
+
+        @Override
+        public int compare(Libro x, Libro y) {
+            if (x.compareTo(y) > 0)
+                return 1;
+            if (x.compareTo(y) < 0)
+                return -1;
+            return 0;
+        }
+
     }
 
     @Override
@@ -67,5 +69,6 @@ public class FechaComparator  implements Comparator<Libro>{
         ;
         return returnText;
     }
+
 
 }

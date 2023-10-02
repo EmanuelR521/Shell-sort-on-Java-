@@ -2,20 +2,22 @@ package upb.Taller33.TALLER3;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Comparator;
-
+import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
-
 public class Taller3 {
 
     public static void main(String[] args) throws IOException{
         String ruta = "C:\\Books.csv";
         
         Libro[] libros = leerCSV(ruta);
+
+        Libro.LibroComparator myComparator = new Libro.LibroComparator();
+
+        Selection.sort(libros, myComparator);
+        
         for (Libro libro : libros) {
             StdOut.println(libro.toString());
         }
-
     }
 
 
