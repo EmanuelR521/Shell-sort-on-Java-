@@ -1,25 +1,30 @@
-package upb.Taller33.TALLER3;
+package upb.TALLER3;
 
 import java.util.*;
 
 import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Stopwatch;
 
 public class Libro {
 
     private String bookId;
     private String title;
-    private String authors;
-    private Float averageRating;
+    public String authors;
+    public Float averageRating;
     private String isbn;
     private String isbn13;
     private String languageCode;
     private int numPages;
-    private int ratingsCount;
+    public int ratingsCount;
     private int textReviewsCount;
-    private String publicationDate;
+    public String publicationDate;
     private String publisher;
+
+    public Libro() {
+
+    }
 
     public Libro(String bookId, String title, String authors, Float averageRating, String isbn, String isbn13,
             String languageCode, int numPages, int ratingsCount, int textReviewsCount,
@@ -62,12 +67,13 @@ public class Libro {
 
     public int compareToPublicationDate(Libro bookInstance) {
         String[] date1 = publicationDate.split("/");
-        String[] date2 = publicationDate.split("/");
+        String[] date2 = bookInstance.publicationDate.split("/");
 
-        if (Integer.parseInt(date1[2]) != Integer.parseInt(date2[2])) return Integer.parseInt(date1[2]) - Integer.parseInt(date2[2]);
+        if (Integer.parseInt(date1[2]) != Integer.parseInt(date2[2]))
+            return Integer.parseInt(date1[2]) - Integer.parseInt(date2[2]);
 
         if (Integer.parseInt(date1[1]) != Integer.parseInt(date2[1]))
-        
+
             return Integer.parseInt(date1[1]) - Integer.parseInt(date2[1]);
 
         return Integer.parseInt(date1[0]) - Integer.parseInt(date2[0]);
@@ -122,11 +128,35 @@ public class Libro {
 
     }
 
-    public static void listarPorComparador(Libro [] x, Comparator<Libro> comparador){
-        Insertion.sort(x,comparador);
+    public static void listarPorComparador(Libro[] x, Comparator<Libro> comparador) {
+        Insertion.sort(x, comparador);
         for (Libro libro : x) {
             StdOut.println(libro.toString());
         }
+    }
+
+    public double medirTiempoSelectionSort(Libro[] librito, Comparator<Libro> comparator) {
+        double tiempito;
+        Stopwatch stopwatch = new Stopwatch();
+        Selection.sort(librito, comparator);
+        tiempito = stopwatch.elapsedTime();
+        return tiempito;
+    }
+
+    public double medirTiempoArraysSort(Libro[] librito, Comparator<Libro> comparator) {
+        double tiempito;
+        Stopwatch stopwatch = new Stopwatch();
+        Arrays.sort(librito, comparator);
+        tiempito = stopwatch.elapsedTime();
+        return tiempito;
+    }
+
+    public double medirTiempoInsertionSort(Libro[] librito, Comparator<Libro> comparator) {
+        double tiempito;
+        Stopwatch stopwatch = new Stopwatch();
+        Insertion.sort(librito, comparator);
+        tiempito = stopwatch.elapsedTime();
+        return tiempito;
     }
 
     @Override
