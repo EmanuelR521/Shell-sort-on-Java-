@@ -1,11 +1,12 @@
 package upb.TALLER3;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
-
 import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.Stopwatch;
 
 public class Libro {
 
@@ -21,10 +22,6 @@ public class Libro {
     private int textReviewsCount;
     public String publicationDate;
     private String publisher;
-
-    public Libro() {
-
-    }
 
     public Libro(String bookId, String title, String authors, Float averageRating, String isbn, String isbn13,
             String languageCode, int numPages, int ratingsCount, int textReviewsCount,
@@ -72,11 +69,11 @@ public class Libro {
         if (Integer.parseInt(date1[2]) != Integer.parseInt(date2[2]))
             return Integer.parseInt(date1[2]) - Integer.parseInt(date2[2]);
 
-        if (Integer.parseInt(date1[1]) != Integer.parseInt(date2[1]))
+        if (Integer.parseInt(date1[0]) != Integer.parseInt(date2[0]))
 
-            return Integer.parseInt(date1[1]) - Integer.parseInt(date2[1]);
+            return Integer.parseInt(date1[0]) - Integer.parseInt(date2[0]);
 
-        return Integer.parseInt(date1[0]) - Integer.parseInt(date2[0]);
+        return Integer.parseInt(date1[1]) - Integer.parseInt(date2[1]);
     }
 
     public static class publicationDateComparator implements Comparator<Libro> {
@@ -135,28 +132,46 @@ public class Libro {
         }
     }
 
-    public double medirTiempoSelectionSort(Libro[] librito, Comparator<Libro> comparator) {
-        double tiempito;
-        Stopwatch stopwatch = new Stopwatch();
+    public static double medirTiempoSelectionSort(Libro[] librito, Comparator<Libro> comparator) {
+        double empezarTiempo = System.nanoTime();
         Selection.sort(librito, comparator);
-        tiempito = stopwatch.elapsedTime();
-        return tiempito;
+        double terminarTiempo = System.nanoTime() - empezarTiempo;
+        return terminarTiempo;
     }
 
-    public double medirTiempoArraysSort(Libro[] librito, Comparator<Libro> comparator) {
-        double tiempito;
-        Stopwatch stopwatch = new Stopwatch();
+    public static double medirTiempoArraysSort(Libro[] librito, Comparator<Libro> comparator) {
+        double empezarTiempo = System.nanoTime();
         Arrays.sort(librito, comparator);
-        tiempito = stopwatch.elapsedTime();
-        return tiempito;
+        double terminarTiempo = System.nanoTime() - empezarTiempo;
+        return terminarTiempo;
     }
 
-    public double medirTiempoInsertionSort(Libro[] librito, Comparator<Libro> comparator) {
-        double tiempito;
-        Stopwatch stopwatch = new Stopwatch();
+    public static double medirTiempoInsertionSort(Libro[] librito, Comparator<Libro> comparator) {
+        double empezarTiempo = System.nanoTime();
         Insertion.sort(librito, comparator);
-        tiempito = stopwatch.elapsedTime();
-        return tiempito;
+        double terminarTiempo = System.nanoTime() - empezarTiempo;
+        return terminarTiempo;
+    }
+
+    public static Libro[] leerCSV(String ruta) throws IOException {
+        Libro[] libros = new Libro[11127];
+        int i = 0;
+        BufferedReader br = null;
+        String line = "";
+        // Se define separador ","
+        String splitBy = ",";
+        br = new BufferedReader(new FileReader(ruta));
+        br.readLine();
+        while ((line = br.readLine()) != null) {
+            String[] datos = line.split(splitBy);
+            libros[i] = new Libro(datos[0], datos[1], datos[2],
+                    Float.parseFloat(datos[3]), datos[4], datos[5],
+                    datos[6], Integer.parseInt(datos[7]), Integer.parseInt(datos[8]),
+                    Integer.parseInt(datos[9]), datos[10], datos[11]);
+            i++;
+        }
+        br.close();
+        return libros;
     }
 
     @Override

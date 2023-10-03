@@ -1,80 +1,56 @@
 package upb.TALLER3;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-
-import edu.princeton.cs.algs4.Selection;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Taller3 {
 
     public static void main(String[] args) throws IOException {
+
         String ruta = "C:\\books.csv";
-        Libro[] libros = leerCSV(ruta);
-
-        Libro.averageRatingComparator myComparator = new Libro.averageRatingComparator();
-        Selection.sort(libros, myComparator.reversed());
-
-        for (Libro libro : libros) {
-            StdOut.println(libro.toString());
-        }
-
-        /*
-         * Libro.publicationDateComparator myDateComparator = new
-         * Libro.publicationDateComparator();
-         * Libro.listarPorComparador(libros, myDateComparator);
-         * 
-         * for (Libro libro : libros) {
-         * StdOut.println(libro.toString());
-         * }
-         */
-
-        /*
-         * Libro.AuthorsComparator myauthorsComparator = new Libro.AuthorsComparator();
-         * Libro.listarPorComparador(libros, myauthorsComparator);
-         * 
-         * for (Libro libro : libros) {
-         * StdOut.println(libro.toString());
-         * }
-         */
+        Libro[] libros = Libro.leerCSV(ruta);
 
         // -----------------------------------------------------------------------------------------------------
-        // pruebas punto 7
+        // punto 8 implementando el 7
 
-        Libro librito = new Libro();
-        double timeSelectionSort = librito.medirTiempoSelectionSort(libros, new Libro.AuthorsComparator());
-        StdOut.println("Time the Selection Sort: " + timeSelectionSort + " seg");
+        int k = 20;
+        double timeSelectionSort, timeArraySort, timeInsertionSort;
+        double promedioinsertion, promedioArray, promedioSelection;
+        double acumuladoSelection = 0, acumuladoArray = 0, acumuladoinserton = 0;
 
-        double timeQuickSort = librito.medirTiempoArraysSort(libros, new Libro.AuthorsComparator());
-        StdOut.println("Time the Array Sort: " + timeQuickSort + " seg");
+        for (int i = 1; i <= k; i++) {
 
-        double timeInsertionSort = librito.medirTiempoInsertionSort(libros, new Libro.AuthorsComparator());
-        StdOut.println("Time the Insertion Sort: " + timeInsertionSort + " seg");
+            StdOut.println("\nmedicion #" + i + "\n");
+
+            StdRandom.shuffle(libros);
+            timeSelectionSort = Libro.medirTiempoSelectionSort(libros, new Libro.averageRatingComparator());
+            acumuladoSelection += timeSelectionSort;
+            StdOut.println("Time the Selection Sort: " + timeSelectionSort * Math.pow(10, -9) + " seg");
+
+            StdRandom.shuffle(libros);
+            timeArraySort = Libro.medirTiempoArraysSort(libros, new Libro.averageRatingComparator());
+            acumuladoArray += timeArraySort;
+            StdOut.println("Time the Array Sort: " + timeArraySort * Math.pow(10, -9) + " seg");
+
+            StdRandom.shuffle(libros);
+            timeInsertionSort = Libro.medirTiempoInsertionSort(libros, new Libro.averageRatingComparator());
+            acumuladoinserton += timeInsertionSort;
+            StdOut.println("Time the Insertion Sort: " + timeInsertionSort * Math.pow(10, -9) + " seg");
+        }
+
+        promedioSelection = acumuladoSelection / k;
+        StdOut.println(
+                "\nel promedio de Selection con k=20 veces es de: " + promedioSelection * Math.pow(10, -9) + " seg");
+        promedioArray = acumuladoArray / k;
+        StdOut.println(
+                "el promedio de Array con k=20 veces es de: " + promedioArray * Math.pow(10, -9) + " seg");
+        promedioinsertion = acumuladoinserton / k;
+        StdOut.println(
+                "el promedio de Insertion con k=20 veces es de: " + promedioinsertion * Math.pow(10, -9) + " seg\n");
 
         // ------------------------------------------------------------------------------------------------------
 
-    }
-
-    public static Libro[] leerCSV(String ruta) throws IOException {
-        Libro[] libros = new Libro[11127];
-        int i = 0;
-        BufferedReader br = null;
-        String line = "";
-        // Se define separador ","
-        String splitBy = ",";
-        br = new BufferedReader(new FileReader(ruta));
-        br.readLine();
-        while ((line = br.readLine()) != null) {
-            String[] datos = line.split(splitBy);
-            libros[i] = new Libro(datos[0], datos[1], datos[2],
-                    Float.parseFloat(datos[3]), datos[4], datos[5],
-                    datos[6], Integer.parseInt(datos[7]), Integer.parseInt(datos[8]),
-                    Integer.parseInt(datos[9]), datos[10], datos[11]);
-            i++;
-        }
-        br.close();
-        return libros;
     }
 
 }
