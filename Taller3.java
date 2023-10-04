@@ -16,11 +16,12 @@ public class Taller3 {
         // -----------------------------------------------------------------------------------------------------
 
         // probando metodo shellShort en AverageRating
-        Libro.averageRatingComparator myComparator = new Libro.averageRatingComparator();
-        Libro.shellSort(libros, myComparator.reversed());
-        for (Libro libro : libros) {
-            StdOut.println(libro.toString());
-        }
+        // Libro.averageRatingComparator myComparator = new
+        // Libro.averageRatingComparator();
+        // Libro.shellSort(libros, myComparator.reversed());
+        // for (Libro libro : libros) {
+        // StdOut.println(libro.toString());
+        // }
 
         // -----------------------------------------------------------------------------------------------------
 
@@ -35,27 +36,27 @@ public class Taller3 {
             StdOut.println("\nmedicion #" + i + "\n");
 
             StdRandom.shuffle(libros);
-            timeSelection = Libro.medirTiempoSelectionSort(libros, new Libro.averageRatingComparator());
+            timeSelection = Libro.medirTiempoSelectionSort(libros, new Libro.RatingsCountComparator());
             acumuladoSelection += timeSelection;
             StdOut.println("Time the Selection Sort: " + formateo.format(timeSelection) + " seg");
 
             StdRandom.shuffle(libros);
-            timeArray = Libro.medirTiempoArraysSort(libros, new Libro.averageRatingComparator());
+            timeArray = Libro.medirTiempoArraysSort(libros, new Libro.RatingsCountComparator());
             acumuladoArray += timeArray;
             StdOut.println("Time the Array     Sort: " + formateo.format(timeArray) + " seg");
 
             StdRandom.shuffle(libros);
-            timeInsertion = Libro.medirTiempoInsertionSort(libros, new Libro.averageRatingComparator());
+            timeInsertion = Libro.medirTiempoInsertionSort(libros, new Libro.RatingsCountComparator());
             acumuladoinserton += timeInsertion;
             StdOut.println("Time the Insertion Sort: " + formateo.format(timeInsertion) + " seg");
 
             StdRandom.shuffle(libros);
-            timeShell = Libro.medirTiempoShellSort(libros, new Libro.averageRatingComparator());
+            timeShell = Libro.medirTiempoShellSort(libros, new Libro.RatingsCountComparator());
             acumuladoShell += timeShell;
             StdOut.println("Time the Shell     Sort: " + formateo.format(timeShell) + " seg");
         }
 
-        StdOut.println("\n------------------averageRatingComparator------------------");
+        StdOut.println("\n------------------RatingsCountComparator------------------");
 
         promSelection = acumuladoSelection / k;
         StdOut.println("\nEl promedio de Selection con k=20 veces es de: " + formateo.format(promSelection) + " seg");
