@@ -136,21 +136,28 @@ public class Libro {
         double empezarTiempo = System.nanoTime();
         Selection.sort(librito, comparator);
         double terminarTiempo = System.nanoTime() - empezarTiempo;
-        return terminarTiempo;
+        return terminarTiempo * Math.pow(10, -9); // lo pasamos a seg
     }
 
     public static double medirTiempoArraysSort(Libro[] librito, Comparator<Libro> comparator) {
         double empezarTiempo = System.nanoTime();
         Arrays.sort(librito, comparator);
         double terminarTiempo = System.nanoTime() - empezarTiempo;
-        return terminarTiempo;
+        return terminarTiempo * Math.pow(10, -9); // lo pasamos a seg
     }
 
     public static double medirTiempoInsertionSort(Libro[] librito, Comparator<Libro> comparator) {
         double empezarTiempo = System.nanoTime();
         Insertion.sort(librito, comparator);
         double terminarTiempo = System.nanoTime() - empezarTiempo;
-        return terminarTiempo;
+        return terminarTiempo * Math.pow(10, -9); // lo pasamos a seg
+    }
+
+    public static double medirTiempoShellSort(Libro[] librito, Comparator<Libro> comparator) {
+        double empezarTiempo = System.nanoTime();
+        shellSort(librito, comparator);
+        double terminarTiempo = System.nanoTime() - empezarTiempo;
+        return terminarTiempo * Math.pow(10, -9); // lo pasamos a seg
     }
 
     public static Libro[] leerCSV(String ruta) throws IOException {
@@ -172,6 +179,26 @@ public class Libro {
         }
         br.close();
         return libros;
+    }
+
+    public static void shellSort(Object[] libros, Comparator<Libro> comparador) {
+        int n = libros.length;
+        int h = 1;
+        while (h < n / 3)
+            h = 3 * h + 1;
+        while (h >= 1) {
+
+            for (int i = h; i < n; i++) {
+                Object temp = libros[i];
+                int j = i;
+                for (int k = i; j >= h && comparador.compare((Libro) temp, (Libro) libros[k - h]) < 0; k -= h) {
+                    libros[j] = libros[k - h];
+                    j -= h;
+                }
+                libros[j] = temp;
+            }
+            h /= 3;
+        }
     }
 
     @Override
